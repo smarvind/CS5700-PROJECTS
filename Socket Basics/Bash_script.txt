@@ -1,0 +1,30 @@
+if test $1 == "27994" && test $2 == "-s"
+        then
+        python clientssl.py 27994 -s $3 $4
+        echo "the current code has been excecuted through ssl"
+elif test $1 == "-s"
+        then
+        python clientssl.py 27994 $1 $2 $3
+        echo "the current code has been excecuted through ssl"
+elif test $1 == "27993" && test $# -ne 4
+        then
+        python client.py $1 $2 $3
+        echo "the current code has not been excecuted through ssl"
+elif test $# -eq 2
+        then
+        python client.py 27993 $1 $2
+        echo "the current code has not been excecuted through ssl"
+else
+        echo "invalid input"
+arvind_anurag_project5
+fi
+
+
+
+
+
+2ed54622a5d695476ab136b59
+2ed54622a5d695476ab136b5
+sessionid=2ed54622a5d695476ab136b5909423cd
+sessionid=2ed54622a5d695476ab136b5909423cd
+sessionid=2ed54622a5d695476ab136b5909423cd

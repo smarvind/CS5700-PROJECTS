@@ -1,0 +1,19 @@
+SC: client.o clientssl.o bash.o bashssl.o
+
+bashssl.o: clientssl.py
+        python clientssl.py 27994 -s cs5700sp16.ccs.neu.edu 001613334
+
+bash.o: client.py
+        python client.py 27993 cs5700sp16.ccs.neu.edu 001613334
+
+client.o: client.py permit.o
+        python client.py 27993 cs5700sp16.ccs.neu.edu 001795233
+
+clientssl.o: clientssl.py permitssl.o
+        python clientssl.py 27994 -s cs5700sp16.ccs.neu.edu 001795233
+
+permit.o: client.py
+        chmod 777 client.py
+
+permitssl.o: clientssl.py
+        chmod 777 clientssl.py

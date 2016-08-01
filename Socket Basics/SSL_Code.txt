@@ -1,0 +1,62 @@
+import socket
+import ssl
+import re
+import sys
+
+from ssl import wrap_socket, CERT_NONE, PROTOCOL_TLSv1, SSLError
+from ssl import SSLContext
+                                                                                                                                        #qimporting necessary modules
+host = sys.argv[3]
+port = int(sys.argv[1])
+
+sock = socket.socket()
+sock.connect((host,port))
+
+ssl_sock = ssl.wrap_socket(sock, server_side=False,ssl_version=ssl.PROTOCOL_SSLv3, ca_certs = None, cert_reqs = CERT_NONE)              #Wrapping the socket into the SSL socket
+NUID  = sys.argv[4]                                                                                                                     #setting up the argument for the script
+sending_message = 'cs5700spring2016 HELLO' + ' ' + NUID + '\n'
+ssl_sock.send(sending_message)                                                                                                          #sending the message to the SSL socket
+
+num = 0
+while True:
+        try:
+                received_message = ssl_sock.recv(4096)                                                                                 #receiving the message from the server through the SSL socket
+
+                num = str(received_message)
+                print num
+                list1 = re.split(r'\s', num)
+                list2 = re.findall(r'[\+\-\*\/{B}]', num)
+
+                if list2[0] == '+':
+                        num3 = str(int(list1[2]) + int(list1[4]))
+                        num4 = 'cs5700spring2016 ' + num3 + '\n'
+                        ssl_sock.send(num4)
+
+                elif list2[0] == '-':
+                        num3 = str(int(list1[2]) - int(list1[4]))
+                        num4 = 'cs5700spring2016 ' + num3 + '\n'
+                        ssl_sock.send(num4)
+
+
+                elif list2[0] == '*':
+                        num3 = str(int(list1[2]) * int(list1[4]))
+                        num4 = 'cs5700spring2016 ' + num3 + '\n'
+                        ssl_sock.send(num4)
+
+
+                elif list2[0] == '/':
+                        num3 = str(int(list1[2]) / int(list1[4]))
+                        num4 = 'cs5700spring2016 ' + num3 + '\n'
+                        ssl_sock.send(num4)
+   		else:
+                        print "connection terminated"
+                        break
+        except ValueError :
+                print "The value sent cannot be recognized"
+        except KeyboardInterrupt:
+                print " Invalid entry, cannot send solution"
+
+ssl_sock.close()                                                                                                                        #SSL socket closed
+
+
+

@@ -1,0 +1,59 @@
+import socket
+import re
+import sys
+                                                                	#importing the necessary modules
+host = sys.argv[2]
+port = int(sys.argv[1])
+                                                                	#defining the host and port as arguments
+
+sock = socket.socket()
+sock.connect((host,port))
+                                                                	#creating a socket
+NUID  = sys.argv[3]
+
+sending_message = 'cs5700spring2016 HELLO' + ' ' + NUID + '\n'
+sock.send(sending_message)
+                                                                	#sending first message
+num = 0
+while True:
+        try:
+                receiving_data  = sock.recv(4096)
+                num = str(receiving_data)
+                print num
+                list1 = re.split(r'\s', num)                            #splitting the incoming data with respect to spaces
+                list2 = re.findall(r'[\+\-\*\/{B}]', num)               #finding the operations in the incoming messages
+
+
+                if list2[0] == '+':
+                        num3 = str(int(list1[2]) + int(list1[4]))       #performing the operation
+                        num4 = 'cs5700spring2016 ' + num3 + '\n'        #sending it in the desired form for the server to understand
+                        sock.send(num4)                                 #sending the message to the server
+
+
+                elif list2[0] == '-':
+                        num3 = str(int(list1[2]) - int(list1[4]))       #performing the operation
+                        num4 = 'cs5700spring2016 ' + num3 + '\n'        #sending it in the desired form for the server to understand
+                        sock.send(num4)                                 #sending the message to the server
+
+
+                elif list2[0] == '*':
+                        num3 = str(int(list1[2]) * int(list1[4]))       #performing the operation
+                        num4 = 'cs5700spring2016 ' + num3 + '\n'        #sending it in the desired form for the server to understand
+                        sock.send(num4)                                 #sending the message to the server
+
+
+                elif list2[0] == '/':
+                        num3 = str(int(list1[2]) / int(list1[4]))       #performing the operation
+                        num4 = 'cs5700spring2016 ' + num3 + '\n'        #sending it un the desired form for the server to understand
+                        sock.send(num4)                                 #sending the message to the server
+
+
+                else:
+			print "connection terminated"                   #terminating the meassage
+                        break                                           #breaking the loop
+
+        except ValueError :
+                print "The value sent cannot be recognized"
+        except KeyboardInterrupt:
+                print " Invalid entry, cannot send solution"
+sock.close()

@@ -1,0 +1,9 @@
+Procedure to run the code 
+
+The dnsserver code accepts a request from the client parse the query part from the packet and give it in the answer and send the ip of the replica server to the client.
+The file is excecuted using the following command
+1)./dnsserver -p <port> -n <name>
+The HTTP server when receives a request will ask the north virginia replica server for the page which will inturn request the page from the origin server and give it to the client through the replica server. A file will be created in the directory of the client from the where the request was made and will be cached in the replica server. The code is exxecutable using the following command
+2)./httpserver -p <port> -o <origin>
+
+

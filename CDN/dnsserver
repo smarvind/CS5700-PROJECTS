@@ -1,0 +1,1 @@
+python dnstest7.py -p $2 -n $4
